@@ -33,7 +33,7 @@ jobs:
       env:
         GIT_NAME: ylchuai
         GIT_EMAIL: ${{ secrets.email }}
-        REPO: github.com/ylchuai/ylchuai.github.io.git
+        REPO: github.com/ylchuai/hexoDemo.git
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
         cd ./public && git init && git add .
