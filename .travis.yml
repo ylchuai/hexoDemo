@@ -1,18 +1,47 @@
-sudo: false
 language: node_js
-node_js:
-  - 10 # use nodejs v10 LTS
-cache: npm
-branches:
-  only:
-    - master # build master branch only
+node_js: stable
+
+cache:
+    apt: true
+    directories:
+        - node_modules
+
+notifications:
+    email:
+        recipients:
+            - 1005197431@qq.com #你的邮箱地址
+        on_success: change
+        on_failure: always
+
+# turn off the clone of submodules for change the SSH to HTTPS in .gitmodules to avoid the error
+git:
+  submodules: false
+        
+before_install:
+    - export TZ='Asia/Tianjin'
+    - npm install hexo-cli -g
+
+install:
+    - npm install
+
 script:
-  - hexo generate # generate static files
-deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: $GH_TOKEN
-  keep-history: true
-  on:
-    branch: master
-  local-dir: public
+    - hexo clean
+    - hexo g
+
+after_script:
+  - cd ./public
+  - git init
+  - git config user.name "ylchuai"
+  - git config user.email "1005197431@qq.com"
+  - git add .
+  - git commit -m "Update blog content by Travis CI"
+  - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master
+
+branches:
+    only:
+        - main
+
+env:
+    global:
+        # Github Pages
+        - GH_REF: github.com/ylchuai/ylchuai.github.io.git
