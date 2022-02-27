@@ -8,7 +8,7 @@ on:
 jobs:
   hexo-deployment:
     runs-on: ubuntu-latest
-    env: secrets
+    environment: secrets
 
     steps:
     - name: Checkout source
