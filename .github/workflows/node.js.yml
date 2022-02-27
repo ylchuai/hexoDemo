@@ -8,8 +8,7 @@ on:
 jobs:
   hexo-deployment:
     runs-on: ubuntu-latest
-    env:
-      TZ: Asia/Tianjin
+    env: secrets
 
     steps:
     - name: Checkout source
@@ -32,7 +31,7 @@ jobs:
     - name: Deploy to Github Pages
       env:
         GIT_NAME: ylchuai
-        GIT_EMAIL: ${{ secrets.email }}
+        GIT_EMAIL: ${{ secrets.EMAIL }}
         REPO: github.com/ylchuai/hexoDemo.git
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
